@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Willkommen bei {{firma}}</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-blue: #1a79ff;
+      --secondary-purple: #7b2ff2;
+      --text-dark: #1a2433;
+      --text-medium: #3a3a4d;
+      --text-light: #7a8ca3;
+      --bg-light: #f7faff;
+      --white: #ffffff;
+      --shadow-light: rgba(26,121,255,0.08);
+      --shadow-medium: rgba(26,121,255,0.15);
+      --shadow-dark: rgba(123,47,242,0.18);
+      --border-color: #e3e6f9;
+      --gradient-main: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warm: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header & Navigation von index-mira.html */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 245, 250, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(26, 121, 255, 0.15);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      border-bottom: 1px solid rgba(26, 121, 255, 0.1);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1a79ff 0%, #7b2ff2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .logo:hover {
+      opacity: 0.8;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #4B5563;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.5rem 0;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #1a79ff 0%, #7b2ff2 100%);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #1a79ff;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Language Switcher */
+    .language-switcher {
+      position: relative;
+    }
+
+    .language-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(26, 121, 255, 0.1);
+      border: 1px solid rgba(26, 121, 255, 0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      color: #4B5563;
+      font-weight: 500;
+    }
+
+    .language-btn:hover {
+      background: rgba(26, 121, 255, 0.15);
+      border-color: rgba(26, 121, 255, 0.3);
+      box-shadow: 0 2px 8px rgba(26, 121, 255, 0.15);
+    }
+
+    .arrow-down {
+      font-size: 0.7rem;
+      transition: transform 0.3s ease;
+      color: #6B7280;
+    }
+
+    .language-btn[aria-expanded="true"] .arrow-down {
+      transform: rotate(180deg);
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      padding: 0.5rem 0;
+      min-width: 150px;
+      display: none;
+      z-index: 1000;
+      margin-top: 4px;
+    }
+
+    .dropdown-menu.show {
+      display: block;
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      color: var(--text-dark);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .dropdown-item:hover {
+      background: #F3F4F6;
+      color: var(--primary-blue);
+    }
+
+    /* Auth Buttons */
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .login-btn {
+      color: #1a79ff;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      border: 1px solid rgba(26, 121, 255, 0.3);
+    }
+
+    .login-btn:hover {
+      background: rgba(26, 121, 255, 0.1);
+      border-color: rgba(26, 121, 255, 0.5);
+    }
+
+    .hero-section {
+      position: relative;
+      background: var(--gradient-blue);
+      color: white;
+      padding: 10rem 0 8rem;
+      margin-top: 80px;
+      overflow: hidden;
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        linear-gradient(135deg, rgba(26, 121, 255, 0.9) 0%, rgba(123, 47, 242, 0.9) 100%),
+        url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2426&q=80') center/cover;
+      z-index: 0;
+    }
+
+    .hero-section::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(26, 121, 255, 0.2) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-wave {
+      position: absolute;
+      left: 0; 
+      right: 0; 
+      bottom: -1px; 
+      height: 120px;
+      background: linear-gradient(to bottom, rgba(247,250,255,0) 0%, rgba(122,140,227,0.18) 60%, var(--bg-light) 100%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .logo-top-right {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      width: 110px;
+      z-index: 3;
+      background: rgba(255,255,255,0.9);
+      border-radius: 50%;
+      box-shadow: 0 2px 12px 0 rgba(0,0,0,0.10);
+      padding: 0.3rem;
+      transition: transform 0.7s cubic-bezier(.4,2,.6,1);
+      transform-style: preserve-3d;
+    }
+    .logo-top-right:hover {
+      transform: rotateY(360deg);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-title, .hero-subtitle {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      filter: none;
+      opacity: 1;
+      text-shadow: 0 2px 16px rgba(0,0,0,0.10);
+    }
+    .hero-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      margin: 0 0 1.5rem 0;
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: 0.01em;
+      filter: none;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      position: relative;
+      z-index: 3;
+    }
+    .hero-title::before {
+      content: none;
+    }
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2.5rem;
+      opacity: 0.95;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .btn, .cta-button {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      margin: 1.2rem auto 0 auto;
+      background: linear-gradient(90deg, var(--primary-blue) 0%, var(--secondary-purple) 100%);
+      color: var(--white);
+      font-weight: 700;
+      padding: 0.7em 1.5em;
+      border-radius: 2em;
+      border: none;
+      font-size: 1.05rem;
+      text-decoration: none;
+      box-shadow: 0 4px 24px 0 var(--shadow-medium);
+      transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      display: inline-block;
+    }
+    .btn:hover, .cta-button:hover {
+      background: linear-gradient(90deg, var(--secondary-purple) 0%, var(--primary-blue) 100%);
+      color: var(--white);
+      transform: scale(1.08);
+      box-shadow: 0 8px 32px 0 var(--shadow-dark);
+    }
+
+    .register-btn {
+      background: #5a67d8;
+      color: #ffffff;
+      padding: 0.5rem 1.5rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(90, 103, 216, 0.3);
+    }
+
+    .register-btn:hover {
+      background: #4c51bf;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(90, 103, 216, 0.4);
+    }
+
+    .personal-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .personal-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 80% 20%, rgba(26, 121, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(123, 47, 242, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    
+    #client-branding {
+      margin-bottom: 20px; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    #client-branding img {
+      max-width: 150px; 
+      height: auto;
+      border-radius: 8px; 
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    #client-branding p {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary-blue); 
+      margin: 0;
+    }
+
+    .personal-section .personal-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .personal-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--primary-blue);
+      margin-bottom: 10px;
+    }
+    .personal-section h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 30px;
+    }
+    .personal-section p {
+      font-size: 18px;
+      margin-top: 20px;
+      color: var(--text-medium);
+    }
+
+    .vorteile-section,
+    .features-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .vorteile-section::before,
+    .features-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 80% 20%, rgba(26, 121, 255, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(123, 47, 242, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .section-gradient-text {
+        background: linear-gradient(to right, #1a2433 0%, #1a79ff 50%, #7b2ff2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        display: inline-block;
+        text-shadow: none;
+    }
+
+    .vorteile-section h2, .features-section h2, .testimonials-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40px;
+      font-weight: 600;
+      margin-bottom: 50px;
+    }
+
+    .vorteile-list, .features-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem;
+      background: transparent;
+      margin-top: -1.5rem;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+      list-style: none;
+    }
+
+    .features-list .benefit-card {
+        flex: 1 1 320px; /* Even wider than default */
+        min-width: 280px;
+        max-width: 400px;
+    }
+
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-radius: 1.5em;
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+      padding: 1.2rem 1rem 1rem 1rem;
+      flex: 1 1 200px;
+      min-width: 160px;
+      max-width: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 0.7rem;
+      animation: floatCard 3.5s ease-in-out infinite;
+      border: 1.5px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .benefit-card:hover {
+      transform: translateY(-10px) scale(1.05) rotate(-0.5deg);
+      box-shadow: 
+        0 30px 60px rgba(0, 0, 0, 0.12),
+        0 0 0 1px rgba(26, 121, 255, 0.3);
+      border-color: var(--primary-blue);
+    }
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .benefit-card i {
+      font-size: 50px;
+      background: linear-gradient(to right, #1a79ff 0%, #7b2ff2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
+
+    .benefit-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.18rem;
+      font-weight: 800;
+      margin: 0.3rem 0 0.7rem 0;
+      background: linear-gradient(to right, #1a2433 0%, #1a79ff 50%, #7b2ff2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      letter-spacing: 0.01em;
+    }
+
+    .benefit-card p {
+      color: var(--text-medium);
+      font-size: 1.01rem;
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+    }
+
+    .testimonials-section {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 80px 20px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    .testimonials-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 70%, rgba(26, 121, 255, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(123, 47, 242, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .testimonial-content {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(20px);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.3);
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .testimonial-content:hover {
+        transform: translateY(-5px);
+        box-shadow: 
+          0 25px 50px rgba(0, 0, 0, 0.12),
+          0 0 0 1px rgba(26, 121, 255, 0.2);
+    }
+    .testimonial-content p {
+      font-style: italic;
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--text-dark);
+    }
+    .testimonial-content strong {
+      color: var(--primary-blue);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .cta-section {
+      background: linear-gradient(to right, #1a79ff 0%, #7b2ff2 100%);
+      color: white;
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 44px;
+      font-weight: 600;
+      margin-bottom: 40px;
+      -webkit-background-clip: initial;
+      -webkit-text-fill-color: initial;
+      background-clip: initial;
+      text-fill-color: initial;
+      position: relative;
+      z-index: 2;
+    }
+
+    .cta-section .cta-button {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--primary-blue);
+      font-weight: 700;
+      transition: all 0.3s ease;
+    }
+
+    .cta-section .cta-button:hover {
+      background: white;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    footer {
+      background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+      color: #334155;
+      padding: 4rem 0 1rem;
+      position: relative;
+      z-index: 2;
+      margin-top: 0;
+      border-top: 1px solid rgba(26, 121, 255, 0.1);
+      box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(26, 121, 255, 0.3), transparent);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-column h4 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #1e293b;
+      background: linear-gradient(135deg, #1a79ff 0%, #7b2ff2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-links a {
+      color: #64748b;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: #1a79ff;
+      transform: translateX(5px);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(26, 121, 255, 0.2);
+      padding-top: 2rem;
+      text-align: center;
+      color: #64748b;
+    }
+
+    footer p {
+      color: #64748b;
+      margin-top: 15px;
+      margin-bottom: 0;
+    }
+    footer a {
+      color: #1e293b;
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-weight: 500;
+    }
+    footer a:hover {
+      color: #1a79ff;
+    }
+    .language-selector {
+        margin-bottom: 20px;
+    }
+    .language-selector button {
+      background: none;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 8px 15px;
+      border-radius: 5px;
+      margin: 0 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+    .language-selector button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-color: var(--white);
+      color: var(--white);
+    }
+    .flag-icon {
+      width: 16px;
+      height: auto;
+      margin-right: 8px;
+      vertical-align: middle;
+      border-radius: 2px;
+    }
+
+    @media (max-width: 992px) {
+        .benefit-card {
+            flex: 1 1 calc(50% - 30px);
+        }
+    }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-wrap: wrap;
+        gap: 1rem;
+        padding: 0 1rem;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        order: 4;
+        flex-direction: column;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        padding: 1rem;
+        margin-top: 1rem;
+        border: 1px solid rgba(26, 121, 255, 0.2);
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+
+      .hero-section {
+        height: auto;
+        padding: 80px 20px;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+        margin-top: 1rem;
+      }
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      .logo-top-right {
+        width: 80px;
+      }
+      .personal-section h2, .vorteile-section h2, .features-section h2, .testimonials-section h2, .cta-section h2 {
+        font-size: 32px;
+      }
+      .personal-section h3 {
+          font-size: 22px;
+      }
+      .vorteile-list, .features-list {
+        flex-direction: column;
+        align-items: center;
+      }
+      .benefit-card {
+        flex: 1 1 90%;
+        max-width: 400px;
+      }
+      .btn, .cta-button {
+          padding: 12px 25px;
+          font-size: 17px;
+      }
+      .testimonials-section .col-md-4 {
+          margin-bottom: 30px;
+      }
+      #client-branding p {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 34px;
+        }
+        .hero-subtitle {
+            font-size: 18px;
+        }
+        .logo-top-right {
+            max-width: 80px;
+            top: 15px;
+            right: 15px;
+        }
+        .personal-section h2, .vorteile-section h2, .features-section h2, .testimonials-section h2, .cta-section h2 {
+            font-size: 28px;
+        }
+        .personal-section p, .benefit-card p, .testimonial-content p {
+            font-size: 16px;
+        }
+        .language-selector button {
+            margin: 0 5px;
+            padding: 6px 12px;
+        }
+    }
+  </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="../index.html" class="logo">📊 MiraSmart Finance</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Für Partner</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+            
+            <!-- Language Switcher -->
+            <div class="language-switcher">
+                <div class="dropdown">
+                    <button class="language-btn" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="../assets/images/flags/germany.png" alt="Deutsch" class="flag-icon" height="16">
+                        <span id="current-lang-label">Deutsch</span>
+                        <i class="arrow-down">▼</i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <li><a href="javascript:void(0);" class="dropdown-item lang-switch" data-lang="de">
+                            <img src="../assets/images/flags/germany.png" alt="Deutsch" height="16"> Deutsch</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item lang-switch" data-lang="en">
+                            <img src="../assets/images/flags/us.png" alt="English" height="16"> English</a></li>
+                        <li><a href="javascript:void(0);" class="dropdown-item lang-switch" data-lang="es">
+                            <img src="../assets/images/flags/spain.png" alt="Español" height="16"> Español</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Login/Register Buttons -->
+            <div class="auth-buttons">
+                <a href="../login-2.html" class="login-btn">Anmelden</a>
+                <a href="../register-page.html" class="register-btn">Registrieren</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+                        <img id="logo-top-right" class="logo-top-right" src="../assets/images/miratransparent.png" alt="Mira Logo">
+        <div class="hero-content">
+            <h1 class="hero-title">Finanzpläne, die überzeugen, in Minuten, nicht Tagen.</h1>
+            <p class="hero-subtitle">Weniger Aufwand. Mehr Wirkung. Finanzplanung neu gedacht für Berater und Gründungsbegleiter</p>
+            <div class="hero-buttons">
+                <a href="../login-2.html" class="btn">Exklusiven Beta-Zugang erhalten</a>
+            </div>
+        </div>
+        <div class="hero-wave"></div>
+    </section>
+
+    <section class="personal-section">
+        <div class="personal-content">
+            <div id="client-branding"></div>
+            <h2 id="kontakt" class="section-gradient-text">Willkommen zur exklusiven Beta-Version unserer Finanzplan-App</h2>
+            <h3>Wir richten uns ganz klar an Sie als Betapartner und Testpartner</h3>
+                            <p>Als Beta-Tester erhalten Sie Zugang zu allen Funktionen noch vor der offiziellen Veröffentlichung. Profitieren Sie von exklusiven Vorteilen, maßgeschneidert für Ihr Unternehmen.</p>
+                <a href="../login-2.html" class="cta-button">Jetzt Beta-Version starten</a>
+        </div>
+    </section>
+
+    <section class="vorteile-section">
+        <h2 class="section-gradient-text">Vorteile als Beta-Tester</h2>
+        <div class="vorteile-list">
+            <div class="benefit-card">
+                <i class="fas fa-rocket"></i>
+                <h3>Früher Zugang zur App.</h3>
+                <p>Seien Sie einer der Ersten, die unsere App vor der offiziellen Veröffentlichung erleben.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Einfluss auf Weiterentwicklung</h3>
+                <p>Ihr Feedback ist wertvoll und wird gehört, um die Zukunft der App zu gestalten.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-handshake"></i>
+                <h3>Sonderkonditionen bei Markteinführung.</h3>
+                <p>Erhalten Sie Zugang zu exklusiven Tarifen und Vorteilen bei der offiziellen Markteinführung.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-magnifying-glass"></i>
+                <h3>Exklusive Einblicke in neue Features.</h3>
+                <p>Entdecken Sie kommende Funktionen und Verbesserungen vor allen anderen.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-section" id="features">
+        <h2 class="section-gradient-text">Unsere Kernlösungen</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.2rem; color: var(--text-medium);">Modernste KI-Technologie, die entwickelt wurde, um die Art und Weise zu revolutionieren, wie Sie Business Intelligence, Finanzplanung und operative Effizienz handhaben.</p>
+        <div class="features-list">
+            <div class="benefit-card">
+                <i class="fas fa-chart-line"></i>
+                <h3>Finanzprognosen</h3>
+                <p>KI-gestützte Finanzmodellierungs- und Prognoseplattform, die komplexe Daten in umsetzbare Geschäftseinblicke und strategische Planungstools umwandelt.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-file-invoice"></i>
+                <h3>BWA direkt in Prognosen überführen</h3>
+                <p>Überführen Sie Ihre BWA-Daten automatisch in aussagekräftige Prognosen und erstellen Sie präzise Finanzpläne auf Basis Ihrer tatsächlichen Geschäftszahlen.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-brain"></i>
+                <h3>KI-generierte Berichte</h3>
+                <p>Automatisierte Generierung von Geschäftsdokumenten mittels fortschrittlicher KI zur Erstellung umfassender Berichte, Zusammenfassungen und strategischer Analysen in Minuten, nicht Stunden.</p>
+            </div>
+            <div class="benefit-card">
+                <i class="fas fa-diagram-project"></i>
+                <h3>Excel-Integration</h3>
+                <p>Bauen Sie aus Ihrer eigenen Excel-Lösung einen professionellen Bericht mit MiraSmart Finance. Nahtlose Integration Ihrer bestehenden Tabellen in unser System.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials-section">
+        <h2 class="section-gradient-text">Was unsere Benutzer sagen</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 testimonial-content">
+                    <p>"So einfach war es noch nie, meinen Finanzplan zu erstellen!"</p>
+                    <strong>4.8 / 5 ⭐⭐⭐⭐⭐</strong>
+                </div>
+                <div class="col-md-4 testimonial-content">
+                    <p>"Die KI-gestützte Analyse war beeindruckend!"</p>
+                    <strong>5.0 / 5 ⭐⭐⭐⭐⭐</strong>
+                </div>
+                <div class="col-md-4 testimonial-content">
+                    <p>"Professionell und zeitsparend!"</p>
+                    <strong>4.9 / 5 ⭐⭐⭐⭐⭐</strong>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <h2>Bereit, loszulegen?</h2>
+        <a href="../login-2.html" class="cta-button">Jetzt Beta-Version starten</a>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h4>📊 MiraSmart Solutions GmbH</h4>
+                <p>Der einfachste Weg zu Ihrem bankfähigen Finanzplan.</p>
+                <p><strong>Adresse:</strong><br>
+                Bergheimer Straße 147<br>69115 Heidelberg</p>
+                <p><strong>E-Mail:</strong><br>
+                <a href="mailto:info@mirasmart.de">info@mirasmart.de</a></p>
+                <p><strong>Telefon:</strong><br>
+                <a href="tel:+4962214588903">+49 6221 4588903</a></p>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Produkt</h4>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Für Partner</a></li>
+                    <li><a href="../login-2.html">Anmelden</a></li>
+                    <li><a href="../register-page.html">Registrieren</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                    <li><a href="mailto:support@mirasmart.de">support@mirasmart.de</a></li>
+                    <li><a href="tel:+4962214588903">+49 6221 4588903</a></li>
+                    <li><a href="help">Hilfe</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h4>Rechtliches</h4>
+                <ul class="footer-links">
+                    <li><a href="impressum">Impressum</a></li>
+                    <li><a href="datenschutz">Datenschutz</a></li>
+                    <li><a href="agb">AGB</a></li>
+                    <li><a href="widerruf">Widerrufsrecht</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Business Start EU GmbH · Diese Beta-Version ist ausschließlich für ausgewählte Nutzer bestimmt. Bitte behandeln Sie alle erhaltenen Informationen vertraulich.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Debug: Verificar que los parámetros se están leyendo correctamente
+        console.log('URL actual:', window.location.href);
+        console.log('Parámetros de búsqueda:', window.location.search);
+        
+        const params = new URLSearchParams(window.location.search);
+        const firma = params.get('firma');
+        const kontakt = params.get('kontakt');
+        const logo = params.get('logo');
+        
+        console.log('Parámetros extraídos:', { firma, kontakt, logo });
+
+        // Función para obtener el nombre de la empresa desde la URL o usar valor por defecto
+        function getFirmaName() {
+            if (firma) {
+                return firma;
+            }
+            
+            // Intentar extraer el nombre de la empresa de la URL si no hay parámetros
+            const pathSegments = window.location.pathname.split('/');
+            const lastSegment = pathSegments[pathSegments.length - 1];
+            
+            // Si la URL termina en /welcome/, usar un valor por defecto
+            if (lastSegment === 'welcome' || lastSegment === '') {
+                return 'Ihr Unternehmen'; // Valor por defecto en alemán
+            }
+            
+            // Si hay algo más en la URL, usarlo como nombre de empresa
+            return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1);
+        }
+
+        // Función para obtener el nombre de contacto
+        function getKontaktName() {
+            if (kontakt) {
+                return kontakt;
+            }
+            
+            // Intentar extraer de la URL o usar valor por defecto
+            const pathSegments = window.location.pathname.split('/');
+            if (pathSegments.length > 2) {
+                const secondLastSegment = pathSegments[pathSegments.length - 2];
+                if (secondLastSegment && secondLastSegment !== 'welcome') {
+                    return secondLastSegment.charAt(0).toUpperCase() + secondLastSegment.slice(1);
+                }
+            }
+            
+            return 'Beta-Tester'; // Valor por defecto
+        }
+
+        // Función para obtener el logo
+        function getLogoUrl() {
+            if (logo) {
+                return logo;
+            }
+            
+            // Si no hay logo, no mostrar nada
+            return null;
+        }
+
+        // Aplicar el contenido dinámico
+        const firmaName = getFirmaName();
+        const kontaktName = getKontaktName();
+        const logoUrl = getLogoUrl();
+
+        console.log('Valores finales:', { firmaName, kontaktName, logoUrl });
+
+        // Actualizar el título de la página
+        if (firmaName && firmaName !== 'Ihr Unternehmen') {
+            document.title = `Willkommen bei ${firmaName}`;
+        } else {
+            document.title = 'Willkommen bei MiraSmart Finance';
+        }
+
+        // Actualizar el mensaje de bienvenida
+        const kontaktElement = document.getElementById('kontakt');
+        if (kontaktElement) {
+            if (kontaktName && kontaktName !== 'Beta-Tester') {
+                kontaktElement.textContent = `${kontaktName}, willkommen zur exklusiven Beta-Version unserer Finanzplan-App`;
+            } else {
+                kontaktElement.textContent = `Willkommen zur exklusiven Beta-Version unserer Finanzplan-App`;
+            }
+        }
+
+        // Actualizar el branding del cliente
+        const clientBranding = document.getElementById('client-branding');
+        if (clientBranding) {
+            clientBranding.innerHTML = '';
+            
+            if (logoUrl) {
+                const img = document.createElement('img');
+                img.src = logoUrl;
+                img.alt = 'Kundenlogo';
+                img.onerror = function() {
+                    // Si la imagen falla, mostrar el nombre de la empresa
+                    const p = document.createElement('p');
+                    p.textContent = firmaName;
+                    clientBranding.appendChild(p);
+                };
+                clientBranding.appendChild(img);
+            } else if (firmaName && firmaName !== 'Ihr Unternehmen') {
+                const p = document.createElement('p');
+                p.textContent = firmaName;
+                clientBranding.appendChild(p);
+            } else {
+                const fallback = document.createElement('p');
+                fallback.textContent = 'Willkommen!';
+                clientBranding.appendChild(fallback);
+            }
+        }
+
+        // Función para generar URL con parámetros (útil para enlaces internos)
+        function generateWelcomeUrl(customFirma = null, customKontakt = null, customLogo = null) {
+            const url = new URL(window.location.href);
+            if (customFirma) url.searchParams.set('firma', customFirma);
+            if (customKontakt) url.searchParams.set('kontakt', customKontakt);
+            if (customLogo) url.searchParams.set('logo', customLogo);
+            return url.toString();
+        }
+
+        // Exponer la función globalmente para uso futuro
+        window.generateWelcomeUrl = generateWelcomeUrl;
+
+        // Función para detectar si estamos en una subcarpeta y ajustar el comportamiento
+        function detectSubfolderContext() {
+            const pathname = window.location.pathname;
+            const isInSubfolder = pathname.includes('/welcome/') || pathname.endsWith('/welcome');
+            
+            console.log('Detectado subcarpeta:', isInSubfolder);
+            console.log('Pathname completo:', pathname);
+            
+            return isInSubfolder;
+        }
+
+        // Función para extraer información de la URL de manera más inteligente
+        function extractInfoFromUrl() {
+            const pathname = window.location.pathname;
+            const segments = pathname.split('/').filter(segment => segment.length > 0);
+            
+            console.log('Segmentos de URL:', segments);
+            
+            // Si estamos en /welcome/empresa/contacto
+            if (segments.length >= 2 && segments[segments.length - 2] === 'welcome') {
+                const empresa = segments[segments.length - 1];
+                return {
+                    empresa: empresa.charAt(0).toUpperCase() + empresa.slice(1),
+                    contacto: 'Beta-Tester'
+                };
+            }
+            
+            // Si estamos en /welcome/empresa/contacto/
+            if (segments.length >= 3 && segments[segments.length - 3] === 'welcome') {
+                const empresa = segments[segments.length - 2];
+                const contacto = segments[segments.length - 1];
+                return {
+                    empresa: empresa.charAt(0).toUpperCase() + empresa.slice(1),
+                    contacto: contacto.charAt(0).toUpperCase() + contacto.slice(1)
+                };
+            }
+            
+            return null;
+        }
+
+        // Aplicar la detección de contexto
+        const subfolderContext = detectSubfolderContext();
+        const urlInfo = extractInfoFromUrl();
+        
+        if (urlInfo && !firma && !kontakt) {
+            // Si no hay parámetros pero hay información en la URL, usarla
+            console.log('Usando información de la URL:', urlInfo);
+            const firmaName = urlInfo.empresa;
+            const kontaktName = urlInfo.contacto;
+            
+            // Actualizar el título
+            document.title = `Willkommen bei ${firmaName}`;
+            
+            // Actualizar el mensaje de bienvenida
+            const kontaktElement = document.getElementById('kontakt');
+            if (kontaktElement) {
+                kontaktElement.textContent = `${kontaktName}, willkommen zur exklusiven Beta-Version unserer Finanzplan-App`;
+            }
+            
+            // Actualizar el branding
+            const clientBranding = document.getElementById('client-branding');
+            if (clientBranding) {
+                clientBranding.innerHTML = '';
+                const p = document.createElement('p');
+                p.textContent = firmaName;
+                clientBranding.appendChild(p);
+            }
+        }
+
+        // Language Switcher Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const languageBtn = document.getElementById('languageDropdown');
+            const dropdownMenu = languageBtn.nextElementSibling;
+            const currentLangLabel = document.getElementById('current-lang-label');
+            
+            // Toggle dropdown
+            languageBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const isExpanded = languageBtn.getAttribute('aria-expanded') === 'true';
+                languageBtn.setAttribute('aria-expanded', !isExpanded);
+                dropdownMenu.classList.toggle('show', !isExpanded);
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!languageBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                    languageBtn.setAttribute('aria-expanded', 'false');
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+
+            // Language switch functionality
+            document.querySelectorAll('.lang-switch').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const selectedLang = this.getAttribute('data-lang');
+                    const selectedText = this.textContent.trim();
+                    const selectedFlag = this.querySelector('img').src;
+                    
+                    // Update current language display
+                    currentLangLabel.textContent = selectedText.split(' ')[1]; // Get language name only
+                    languageBtn.querySelector('img').src = selectedFlag;
+                    
+                    // Close dropdown
+                    languageBtn.setAttribute('aria-expanded', 'false');
+                    dropdownMenu.classList.remove('show');
+                    
+                    // Store language preference
+                    localStorage.setItem('selectedLanguage', selectedLang);
+                    
+                    console.log('Language switched to:', selectedLang);
+                });
+            });
+
+            // Load saved language preference
+            const savedLang = localStorage.getItem('selectedLanguage');
+            if (savedLang && savedLang !== 'de') {
+                // Find and trigger the saved language
+                const savedLangItem = document.querySelector(`[data-lang="${savedLang}"]`);
+                if (savedLangItem) {
+                    savedLangItem.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
